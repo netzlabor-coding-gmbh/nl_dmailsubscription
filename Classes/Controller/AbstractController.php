@@ -2,7 +2,7 @@
 
 namespace NL\NlDmailsubscription\Controller;
 
-use Kikkoman\KikkomanGoods\SettingsTrait;
+use NL\NlDmailsubscription\SettingsTrait;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
