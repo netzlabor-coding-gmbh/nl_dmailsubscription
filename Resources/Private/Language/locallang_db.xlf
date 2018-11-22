@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2018-03-23UTC15:10:580">
+        <header>
+            <authorName>Maksym Chubin</authorName>
+            <authorEmail>maksim.chubin@netzlabor-coding.de</authorEmail>
+        </header>
+        <body>
+            <trans-unit id="tx_nldmailsubscription_domain_model_sform">
+                <source>NL Dmail Subscription</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_domain_model_sform.description">
+                <source>The Direct Mail Subscription Plugin</source>
+            </trans-unit>
+            <trans-unit id="tt_content.list_type.nldmailsubscription_sform">
+                <source>NL Dmail Subscription</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_domain_model_address.confirmed_at">
+                <source>Confirmed At</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_domain_model_address.token_identifier">
+                <source>Token Identifier</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_domain_model_address.token_expires">
+                <source>Token Expires</source>
+            </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.sheet_general">
+                <source>General</source>
+            </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.sheet_subscription">
+                <source>Subscription</source>
+            </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.sheet_unsubscription">
+                <source>Unsubscription</source>
+            </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.enableUnsubscription">
+                <source>Enable Unsubscription</source>
+            </trans-unit>
+			<trans-unit id="tt_content.pi_flexform.record_storage">
+				<source>Record Storage Page</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.showPrivacyStatement">
+				<source>Show Privacy Statement</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.privacyStatementLink">
+				<source>Privacy Statement Link</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.showUnsubscriptionLink">
+				<source>Show Unsubscription Link</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.enableConfirmation">
+				<source>Enable Confirmation</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.generateUnsubscriptionTokenOnSubscribe">
+				<source>Generate Unsubscription Token On Subscribe</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

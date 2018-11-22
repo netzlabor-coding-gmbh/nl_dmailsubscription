@@ -1,0 +1,22 @@
+{
+    "name": "nl/nl-dmailsubscription",
+    "type": "typo3-cms-extension",
+    "description": "Direct Mail subscription by netzlabor coding GmbH",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Maksym",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^8.7.1",
+        "directmailteam/direct-mail": "^5.2",
+        "friendsoftypo3/tt-address": ">=3.2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "NL\\NlDmailsubscription\\": "Classes"
+        }
+    }
+}

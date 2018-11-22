@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-05-31T16:25:46Z" product-name="nl_dmailsubscription">
+		<header>
+            <authorName>Maksym Chubin</authorName>
+            <authorEmail>maksim.chubin@netzlabor-coding.de</authorEmail>
+        </header>
+		<body>
+			<trans-unit id="tx_nldmailsubscription_sform.subscription.success.message">
+                <source>You are now subscribed as '%s'</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_sform.subscription.success.title">
+                <source>Subscription successful</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_sform.subscription.needConfirm.message">
+                <source>You have successfully subscribed as '%s'. You will get a confirmation email as soon as possible.</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_sform.subscription.needConfirm.title">
+                <source>Subscription confirmation</source>
+            </trans-unit>
+			<trans-unit id="tx_nldmailsubscription_sform.unsubscription.success.message">
+                <source>You are now unsubscribed as '%s'</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_sform.unsubscription.success.title">
+                <source>Unsubscription successful</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_sform.unsubscription.needConfirm.message">
+                <source>You have successfully unsubscribed as '%s'. You will get a confirmation email as soon as possible.</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_sform.unsubscription.needConfirm.title">
+                <source>Unsubscription confirmation</source>
+            </trans-unit>
+            <trans-unit id="validator.uniqueAddress.invalid">
+                <source>This %s is already subscribed.</source>
+            </trans-unit>
+            <trans-unit id="validator.validAddress.invalid">
+                <source>No subscriber matching %s.</source>
+            </trans-unit>
+            <trans-unit id="validator.addressToken.invalid">
+                <source>Invalid request, please try again.</source>
+            </trans-unit>
+            <trans-unit id="validator.addressToken.expired">
+                <source>Request has expired, please try again.</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription.mail.subscription_confirmation_subject">
+                <source>Confirm subscription on %s</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription.mail.unsubscription_confirmation_subject">
+                <source>Confirm unsubscription on %s</source>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

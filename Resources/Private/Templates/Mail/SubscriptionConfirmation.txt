@@ -1,0 +1,9 @@
+Dear {address.email},
+
+Thank you for subscription on our website. In order to complete your subscription, please use the link below:
+
+{hashUri}
+
+This address will expire on <f:format.date>{expiryDate}</f:format.date>, after that you need to resend confirmation link. If you are unable to open the link, please copy and paste it into your browser.
+
+Your website team.

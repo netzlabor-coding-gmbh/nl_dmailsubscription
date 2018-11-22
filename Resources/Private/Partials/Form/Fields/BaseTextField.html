@@ -1,0 +1,17 @@
+<f:form.validationResults for="{objectName}.{property}">
+    <div class="form-group {f:if(condition: validationResults.errors, then: 'has-feedback has-error')}">
+        <label for="tx-dmail-subscription-{property}-field"><f:translate key="{translationKey}">{defaultLabel}</f:translate></label>
+        <f:form.textfield
+                property="{property}"
+                value="{value}"
+                type="{type}"
+                id="tx-dmail-subscription-{property}-field"
+                placeholder="{f:translate(key: '{placeholderTranslationKey}', default: '{defaultPlaceholder}')}"
+                title="{validationResults.errors.0}"
+                class="form-control"
+                additionalAttributes="{additionalAttributes}" />
+        <f:if condition="{validationResults.errors}">
+            <small class="help-block">{validationResults.errors.0.message}</small>
+        </f:if>
+    </div>
+</f:form.validationResults>

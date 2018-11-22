@@ -1,0 +1,49 @@
+{
+    "modules": [],
+    "properties": {
+        "backendModules": [],
+        "description": "Direct Mail subscription by netzlabor coding GmbH",
+        "emConf": {
+            "category": "plugin",
+            "custom_category": "",
+            "dependsOn": "typo3 => 8.7.0-8.7.99\n",
+            "disableLocalization": false,
+            "disableVersioning": false,
+            "skipGenerateDocumentationTemplate": false,
+            "sourceLanguage": "en",
+            "state": "alpha",
+            "targetVersion": "8.7.0-8.7.99",
+            "version": "1.0.0"
+        },
+        "extensionKey": "nl_dmailsubscription",
+        "name": "Direct Mail Subscription",
+        "originalExtensionKey": "nl_dmailsubscription",
+        "originalVendorName": "NL",
+        "persons": [
+            {
+                "company": "netzlabor coding GmbH",
+                "email": "maksim.chubin@netzlabor-coding.de",
+                "name": "Maksym",
+                "role": "Developer"
+            }
+        ],
+        "plugins": [
+            {
+                "actions": {
+                    "controllerActionCombinations": "Subscription => show, subscribe",
+                    "noncacheableActions": "Subscription => show, subscribe",
+                    "switchableActions": ""
+                },
+                "key": "sform",
+                "name": "Dmail Subscription"
+            }
+        ],
+        "vendorName": "NL"
+    },
+    "wires": [],
+    "log": {
+        "last_modified": "2018-05-22 04:52",
+        "extension_builder_version": "8.7.0",
+        "be_user": "Maksym (3)"
+    }
+}
