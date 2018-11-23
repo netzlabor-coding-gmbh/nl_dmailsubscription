@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "typo3/cms-core": "^8.7.1",
+        "typo3/cms-core": "^7.6",
         "directmailteam/direct-mail": "^5.2",
         "friendsoftypo3/tt-address": ">=3.2.2"
     },

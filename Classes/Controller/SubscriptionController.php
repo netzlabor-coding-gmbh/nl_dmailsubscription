@@ -145,6 +145,7 @@ class SubscriptionController extends AbstractController
     /**
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      * @throws \TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException
+     * @throws \TYPO3\CMS\Extbase\Reflection\Exception\PropertyNotAccessibleException
      */
     public function initializeSubscribeAction()
     {

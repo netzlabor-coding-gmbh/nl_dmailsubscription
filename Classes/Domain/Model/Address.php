@@ -1,8 +1,6 @@
 <?php
 
 namespace NL\NlDmailsubscription\Domain\Model;
-use TYPO3\CMS\Core\Crypto\Random;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 
 /**
@@ -104,7 +102,7 @@ class Address extends \TYPO3\TtAddress\Domain\Model\Address
     public function generateToken($hashLength = 32, $lifetime = null)
     {
         $token = [
-            'hash' => GeneralUtility::makeInstance(Random::class)->generateRandomHexString($hashLength),
+            'hash' => bin2hex(openssl_random_pseudo_bytes($hashLength)),
             'expires' => (int)$lifetime > 0 ? $this->getTokenExpiryDateByLifetime($lifetime) : null
         ];
 
