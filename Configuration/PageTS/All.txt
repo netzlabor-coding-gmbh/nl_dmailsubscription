@@ -1,4 +1,0 @@
-#
-# PageTS for DMail Subscription
-#
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:nl_dmailsubscription/Configuration/PageTS/Mod/Wizards/NewContentElement.txt">

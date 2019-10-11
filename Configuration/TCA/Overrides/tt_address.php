@@ -10,7 +10,8 @@ call_user_func(function()
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'datetime',
+                'eval' => 'datetime,int',
+                'default' => 0,
                 'readOnly' => true,
             ]
         ],
@@ -29,7 +30,8 @@ call_user_func(function()
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'datetime',
+                'eval' => 'datetime,int',
+                'default' => 0,
                 'readOnly' => true,
             ]
         ],

@@ -9,6 +9,31 @@
                 </TCEforms>
                 <type>array</type>
                 <el>
+                    <switchableControllerActions>
+                        <TCEforms>
+                            <label>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.choose_action</label>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items type="array">
+                                    <numIndex index="0" type="array">
+                                        <numIndex index="0">LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.action_all</numIndex>
+                                        <numIndex index="1"></numIndex>
+                                    </numIndex>
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.subscription</numIndex>
+                                        <numIndex index="1">Subscription->showSubscriptionForm;Subscription->subscribe;Subscription->confirmSubscription</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.unsubscription</numIndex>
+                                        <numIndex index="1">Subscription->showUnsubscriptionForm;Subscription->unsubscribe;Subscription->confirmUnsubscription</numIndex>
+                                    </numIndex>
+                                </items>
+                                <maxitems>1</maxitems>
+                                <size>1</size>
+                            </config>
+                        </TCEforms>
+                    </switchableControllerActions>
                     <persistence.storagePid>
                         <TCEforms>
                             <exclude>1</exclude>
@@ -182,5 +207,98 @@
                 </el>
             </ROOT>
         </sUnsubscription>
+        <sRedirects>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.sheet_redirects</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.redirects.disable>
+                        <TCEforms>
+                            <label>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.redirects.disable</label>
+                            <config>
+                                <default>0</default>
+                                <type>check</type>
+                                <items type="array">
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:labels.enabled</numIndex>
+                                        <numIndex index="1">1</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </settings.redirects.disable>
+                    <settings.redirects.afterSubscription>
+                        <TCEforms>
+                            <label>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.redirects.afterSubscription</label>
+                            <exclude>0</exclude>
+                            <config>
+                                <type>input</type>
+                                <renderType>inputLink</renderType>
+                                <fieldControl>
+                                    <linkPopup>
+                                        <options>
+                                            <blindLinkOptions>file,folder,mail,url</blindLinkOptions>
+                                        </options>
+                                    </linkPopup>
+                                </fieldControl>
+                            </config>
+                        </TCEforms>
+                    </settings.redirects.afterSubscription>
+                    <settings.redirects.afterSubscriptionConfirmation>
+                        <TCEforms>
+                            <label>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.redirects.afterSubscriptionConfirmation</label>
+                            <exclude>0</exclude>
+                            <config>
+                                <type>input</type>
+                                <renderType>inputLink</renderType>
+                                <fieldControl>
+                                    <linkPopup>
+                                        <options>
+                                            <blindLinkOptions>file,folder,mail,url</blindLinkOptions>
+                                        </options>
+                                    </linkPopup>
+                                </fieldControl>
+                            </config>
+                        </TCEforms>
+                    </settings.redirects.afterSubscriptionConfirmation>
+                    <settings.redirects.afterUnsubscription>
+                        <TCEforms>
+                            <label>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.redirects.afterUnsubscription</label>
+                            <exclude>0</exclude>
+                            <config>
+                                <type>input</type>
+                                <renderType>inputLink</renderType>
+                                <fieldControl>
+                                    <linkPopup>
+                                        <options>
+                                            <blindLinkOptions>file,folder,mail,url</blindLinkOptions>
+                                        </options>
+                                    </linkPopup>
+                                </fieldControl>
+                            </config>
+                        </TCEforms>
+                    </settings.redirects.afterUnsubscription>
+                    <settings.redirects.afterUnsubscriptionConfirmation>
+                        <TCEforms>
+                            <label>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.redirects.afterUnsubscriptionConfirmation</label>
+                            <exclude>0</exclude>
+                            <config>
+                                <type>input</type>
+                                <renderType>inputLink</renderType>
+                                <fieldControl>
+                                    <linkPopup>
+                                        <options>
+                                            <blindLinkOptions>file,folder,mail,url</blindLinkOptions>
+                                        </options>
+                                    </linkPopup>
+                                </fieldControl>
+                            </config>
+                        </TCEforms>
+                    </settings.redirects.afterUnsubscriptionConfirmation>
+                </el>
+            </ROOT>
+        </sRedirects>
     </sheets>
 </T3DataStructure>

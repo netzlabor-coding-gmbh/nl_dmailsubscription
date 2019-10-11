@@ -9,7 +9,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Class Address
  * @package NL\NlDmailsubscription\Domain\Model
  */
-class Address extends \TYPO3\TtAddress\Domain\Model\Address
+class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
 {
     /**
      * @var string
@@ -45,6 +45,7 @@ class Address extends \TYPO3\TtAddress\Domain\Model\Address
 
     /**
      * @return $this
+     * @throws \Exception
      */
     public function confirm()
     {
@@ -100,6 +101,7 @@ class Address extends \TYPO3\TtAddress\Domain\Model\Address
      * @param int $hashLength
      * @param int $lifetime
      * @return array
+     * @throws \Exception
      */
     public function generateToken($hashLength = 32, $lifetime = null)
     {
@@ -116,6 +118,7 @@ class Address extends \TYPO3\TtAddress\Domain\Model\Address
     /**
      * @param $lifetime
      * @return \DateTime
+     * @throws \Exception
      */
     public function getTokenExpiryDateByLifetime($lifetime)
     {

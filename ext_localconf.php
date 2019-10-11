@@ -16,5 +16,25 @@ call_user_func(
                 'Subscription' => 'showSubscriptionForm, subscribe, confirmSubscription, showUnsubscriptionForm, unsubscribe, confirmUnsubscription',
             ]
         );
+
+        // wizards
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+            'mod {
+                wizards.newContentElement.wizardItems.plugins {
+                    elements {
+                        sform {
+                            iconIdentifier = tx_nldmailsubscription-user-plugin-sform
+                            title = LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tx_nldmailsubscription_domain_model_sform
+                            description = LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tx_nldmailsubscription_domain_model_sform.description
+                            tt_content_defValues {
+                                CType = list
+                                list_type = nldmailsubscription_sform
+                            }
+                        }
+                    }
+                    show = *
+                }
+            }'
+        );
     }
 );

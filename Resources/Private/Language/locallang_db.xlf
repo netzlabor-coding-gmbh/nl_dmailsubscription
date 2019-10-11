@@ -24,6 +24,9 @@
             <trans-unit id="tx_nldmailsubscription_domain_model_address.token_expires">
                 <source>Token Expires</source>
             </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.choose_action">
+                <source>Choose Action</source>
+            </trans-unit>
             <trans-unit id="tt_content.pi_flexform.sheet_general">
                 <source>General</source>
             </trans-unit>
@@ -33,8 +36,17 @@
             <trans-unit id="tt_content.pi_flexform.sheet_unsubscription">
                 <source>Unsubscription</source>
             </trans-unit>
-            <trans-unit id="tt_content.pi_flexform.enableUnsubscription">
-                <source>Enable Unsubscription</source>
+            <trans-unit id="tt_content.pi_flexform.sheet_redirects">
+                <source>Redirects</source>
+            </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.subscription">
+                <source>Subscription</source>
+            </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.unsubscription">
+                <source>Unsubscription</source>
+            </trans-unit>
+            <trans-unit id="tt_content.pi_flexform.action_all">
+                <source> - ALL - </source>
             </trans-unit>
 			<trans-unit id="tt_content.pi_flexform.record_storage">
 				<source>Record Storage Page</source>
@@ -53,6 +65,21 @@
 			</trans-unit>
 			<trans-unit id="tt_content.pi_flexform.generateUnsubscriptionTokenOnSubscribe">
 				<source>Generate Unsubscription Token On Subscribe</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.redirects.afterSubscription">
+				<source>After Subscription</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.redirects.afterSubscriptionConfirmation">
+				<source>After Subscription Confirmation</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.redirects.afterUnsubscription">
+				<source>After Unsubscription</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.redirects.afterUnsubscriptionConfirmation">
+				<source>After Unsubscription Confirmation</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.redirects.disable">
+				<source>Disable</source>
 			</trans-unit>
         </body>
     </file>

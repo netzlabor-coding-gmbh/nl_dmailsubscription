@@ -9,6 +9,7 @@ use NL\NlDmailsubscription\Domain\Validator\AddressTokenValidator;
 use NL\NlDmailsubscription\Domain\Validator\UniqueAddressValidator;
 use NL\NlDmailsubscription\Property\TypeConverter\AddressObjectConverter;
 use NL\NlDmailsubscription\Service\MailService;
+use NL\NlDmailsubscription\Utility\LinkUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
@@ -100,6 +101,12 @@ class SubscriptionController extends AbstractController
                 'confirmation' => [
                     'tokenLifetime' => 86400,
                 ]
+            ],
+            'redirects' => [
+                'afterSubscription' => $this->getTypoScriptFrontendController()->id,
+                'afterSubscriptionConfirmation' => $this->getTypoScriptFrontendController()->id,
+                'afterUnsubscription' => $this->getTypoScriptFrontendController()->id,
+                'afterUnsubscriptionConfirmation' => $this->getTypoScriptFrontendController()->id,
             ],
         ];
     }
@@ -207,7 +214,7 @@ class SubscriptionController extends AbstractController
             "tx_nldmailsubscription_sform.subscription.$key.title"
         );
 
-        $this->redirect('showSubscriptionForm');
+        $this->processRedirect('afterSubscription');
     }
 
     /**
@@ -242,7 +249,7 @@ class SubscriptionController extends AbstractController
             "tx_nldmailsubscription_sform.unsubscription.$key.title"
         );
 
-        $this->redirect('showUnsubscriptionForm');
+        $this->processRedirect('afterUnsubscription');
     }
 
     /**
@@ -273,7 +280,7 @@ class SubscriptionController extends AbstractController
             "tx_nldmailsubscription_sform.subscription.success.title"
         );
 
-        $this->redirect('showSubscriptionForm');
+        $this->processRedirect('afterSubscriptionConfirmation');
     }
 
     /**
@@ -296,7 +303,7 @@ class SubscriptionController extends AbstractController
             "tx_nldmailsubscription_sform.unsubscription.success.title"
         );
 
-        $this->redirect('showSubscriptionForm');
+        $this->processRedirect('afterUnsubscriptionConfirmation');
     }
 
     /**
@@ -359,6 +366,23 @@ class SubscriptionController extends AbstractController
         ]);
 
         return $this->mailService->sendUnsubscriptionConfirmationMessage($address, $token['hash'], $hashUri, $token['expires']);
+    }
+
+    /**
+     * @param string $redirect
+     * @return bool
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     */
+    protected function processRedirect($redirect)
+    {
+        if ($this->getSettingsValue('redirects.disable')) {
+            return false;
+        }
+
+        if ($typolink = $this->getSettingsValue('redirects.' . $redirect)) {
+            $this->redirectToUri(LinkUtility::typoLinkURL($typolink));
+        }
     }
 
     /**
