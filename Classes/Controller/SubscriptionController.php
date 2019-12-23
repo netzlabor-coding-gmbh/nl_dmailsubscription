@@ -11,6 +11,7 @@ use NL\NlDmailsubscription\Property\TypeConverter\AddressObjectConverter;
 use NL\NlDmailsubscription\Service\MailService;
 use NL\NlDmailsubscription\Utility\LinkUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
@@ -146,6 +147,19 @@ class SubscriptionController extends AbstractController
                 ->getArgument('address')
                 ->getPropertyMappingConfiguration()
                 ->setTypeConverter($typeConverter);
+        }
+    }
+
+    /**
+     * @param ViewInterface $view
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     */
+    protected function initializeView(ViewInterface $view)
+    {
+        parent::initializeView($view);
+
+        if ($this->request->hasArgument('address')) {
+            $this->view->assign('address', $this->request->getArgument('address'));
         }
     }
 
@@ -376,13 +390,13 @@ class SubscriptionController extends AbstractController
      */
     protected function processRedirect($redirect)
     {
-        if ($this->getSettingsValue('redirects.disable')) {
-            return false;
+        if (!$this->getSettingsValue('redirects.disable')) {
+            if ($typolink = $this->getSettingsValue('redirects.' . $redirect)) {
+                $this->redirectToUri(LinkUtility::typoLinkURL($typolink));
+            }
         }
 
-        if ($typolink = $this->getSettingsValue('redirects.' . $redirect)) {
-            $this->redirectToUri(LinkUtility::typoLinkURL($typolink));
-        }
+        return false;
     }
 
     /**

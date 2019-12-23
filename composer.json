@@ -2,7 +2,7 @@
     "name": "nl/nl-dmailsubscription",
     "type": "typo3-cms-extension",
     "description": "Direct Mail subscription by netzlabor coding GmbH",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "authors": [
         {
             "name": "Maksym",
