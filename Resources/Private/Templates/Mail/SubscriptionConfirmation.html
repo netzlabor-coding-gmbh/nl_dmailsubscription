@@ -1,9 +1,13 @@
-<p>Dear {address.email},</p>
+<f:format.raw>
+<f:translate key="tx_nldmailsubscription.mail.subscription_confirmation_html" arguments="{0: address.email, 1: hashUri, 2: '{f:format.date(date: expiryDate)}'}">
+<p>Dear %s,</p>
 
 <p>Thank you for subscription on our website. In order to complete your subscription, please click the link below:</p>
 
-<p><a href="{hashUri}">Complete now.</a></p>
+<p><a href="%s">Complete now.</a></p>
 
-<p>This address will expire on <f:format.date>{expiryDate}</f:format.date>, after that you need to resend confirmation link. If you are unable to open the link, please copy and paste it into your browser.</p>
+<p>This address will expire on %s, after that you need to resend confirmation link. If you are unable to open the link, please copy and paste it into your browser.</p>
 
 <p>Your website team.</p>
+</f:translate>
+</f:format.raw>

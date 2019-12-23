@@ -11,7 +11,7 @@
                 class="form-control"
                 additionalAttributes="{additionalAttributes}" />
         <f:if condition="{validationResults.errors}">
-            <small class="help-block">{validationResults.errors.0.message}</small>
+            <small class="help-block" data-code="{validationResults.errors.0.code}"><f:translate key="validationResults.errors.{validationResults.errors.0.code}">{validationResults.errors.0.message}</f:translate></small>
         </f:if>
     </div>
 </f:form.validationResults>

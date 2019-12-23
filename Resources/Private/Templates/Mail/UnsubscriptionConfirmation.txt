@@ -1,9 +1,11 @@
-Dear {address.email},
+<f:translate key="tx_nldmailsubscription.mail.unsubscription_confirmation_text" arguments="{0: address.email, 1: hashUri, 2: '{f:format.date(date: expiryDate)}'}">
+Dear %s,
 
 Thank you for subscription on our website. In order to complete your unsubscription, please use the link below:
 
-{hashUri}
+%s
 
-This address will expire on <f:format.date>{expiryDate}</f:format.date>, after that you need to resend confirmation link. If you are unable to open the link, please copy and paste it into your browser.
+This address will expire on %s, after that you need to resend confirmation link. If you are unable to open the link, please copy and paste it into your browser.
 
 Your website team.
+</f:translate>
