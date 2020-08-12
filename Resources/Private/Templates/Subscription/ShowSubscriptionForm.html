@@ -3,7 +3,9 @@
 
 <f:section name="main">
     <h4><f:translate key="subscription.header">Direct Mail Subscription</f:translate></h4>
-    <f:form action="subscribe" object="{address}" objectName="address">
+    <f:variable name="ajaxUri"
+                value="{f:uri.action(action: 'subscribe', pageType: settings.ajaxTypeNum, format: 'json')}" />
+    <f:form action="subscribe" object="{address}" objectName="address" data="{ajaxuri: ajaxUri}">
         <f:render partial="Form/Fields/Email" arguments="{objectName: 'address'}" />
         <f:render partial="Form/SubmitButton" arguments="{defaultLabel: 'Subscribe', translationKey: 'subscription.submit'}" />
     </f:form>

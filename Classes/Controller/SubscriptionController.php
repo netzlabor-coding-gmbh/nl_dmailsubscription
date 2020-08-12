@@ -9,6 +9,7 @@ use NL\NlDmailsubscription\Domain\Validator\AddressTokenValidator;
 use NL\NlDmailsubscription\Domain\Validator\UniqueAddressValidator;
 use NL\NlDmailsubscription\Property\TypeConverter\AddressObjectConverter;
 use NL\NlDmailsubscription\Service\MailService;
+use NL\NlDmailsubscription\Type\SubscriptionSignalType;
 use NL\NlDmailsubscription\Utility\LinkUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -220,25 +221,39 @@ class SubscriptionController extends AbstractController
         }
 
         $this->addressRepository->update($address);
+        $this->persistenceManager->persistAll();
 
-        $this->addLocalizedFlashMessage(
-            "tx_nldmailsubscription_sform.subscription.$key.message",
-            [$address->getEmail()],
-            $severity,
-            "tx_nldmailsubscription_sform.subscription.$key.title"
-        );
+        $this->emitSignal(SubscriptionSignalType::AFTER_SUBSCRIBE, compact('address'));
 
-        $this->processRedirect('afterSubscription');
+        if ($this->request->getFormat() === "json") {
+            $this->view->assign('value', array_merge([
+                'uri' => $this->processRedirect('afterSubscription', true),
+            ], $this->getLocalizedFlashMessage(
+                "tx_nldmailsubscription_sform.subscription.$key.message",
+                [$address->getEmail()],
+                "tx_nldmailsubscription_sform.subscription.$key.title"))
+            );
+        } else {
+            $this->addLocalizedFlashMessage(
+                "tx_nldmailsubscription_sform.subscription.$key.message",
+                [$address->getEmail()],
+                $severity,
+                "tx_nldmailsubscription_sform.subscription.$key.title"
+            );
+
+            $this->processRedirect('afterSubscription');
+        }
     }
 
     /**
      * @param Address $address
-     * @validate $address \NL\NlDmailsubscription\Domain\Validator\ValidAddressValidator(property='email')
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
     public function unsubscribeAction(Address $address)
     {
@@ -255,6 +270,9 @@ class SubscriptionController extends AbstractController
         } else {
             $this->addressRepository->remove($address);
         }
+        $this->persistenceManager->persistAll();
+
+        $this->emitSignal(SubscriptionSignalType::AFTER_UNSUBSCRIBE, compact('address'));
 
         $this->addLocalizedFlashMessage(
             "tx_nldmailsubscription_sform.unsubscription.$key.message",
@@ -286,6 +304,9 @@ class SubscriptionController extends AbstractController
         }
 
         $this->addressRepository->update($address);
+        $this->persistenceManager->persistAll();
+
+        $this->emitSignal(SubscriptionSignalType::AFTER_CONFIRM, compact('address'));
 
         $this->addLocalizedFlashMessage(
             "tx_nldmailsubscription_sform.subscription.success.message",
@@ -309,6 +330,9 @@ class SubscriptionController extends AbstractController
         $this->processTokenValidation($address, $hash);
 
         $this->addressRepository->remove($address);
+        $this->persistenceManager->persistAll();
+
+        $this->emitSignal(SubscriptionSignalType::AFTER_CONFIRM_UNSUBSCRIBE, compact('address'));
 
         $this->addLocalizedFlashMessage(
             "tx_nldmailsubscription_sform.unsubscription.success.message",
@@ -384,15 +408,23 @@ class SubscriptionController extends AbstractController
 
     /**
      * @param string $redirect
+     * @param bool $return
      * @return bool
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
-    protected function processRedirect($redirect)
+    protected function processRedirect($redirect, $return = false)
     {
         if (!$this->getSettingsValue('redirects.disable')) {
             if ($typolink = $this->getSettingsValue('redirects.' . $redirect)) {
-                $this->redirectToUri(LinkUtility::typoLinkURL($typolink));
+                $uri = LinkUtility::typoLinkURL($typolink);
+
+                if ($return !== false) {
+                    return $uri;
+                }
+
+                $this->redirectToUri($uri);
+                return true;
             }
         }
 

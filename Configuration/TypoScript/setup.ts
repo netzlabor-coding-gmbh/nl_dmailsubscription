@@ -13,6 +13,7 @@ plugin.tx_nldmailsubscription_sform {
         #recursive = 1
     }
     settings {
+        ajaxTypeNum = {$plugin.tx_nldmailsubscription_sform.settings.ajaxTypeNum}
         mail {
             fromName = {$plugin.tx_nldmailsubscription_sform.settings.mail.fromName}
             fromEmail = {$plugin.tx_nldmailsubscription_sform.settings.mail.fromEmail}
@@ -47,6 +48,31 @@ plugin.tx_nldmailsubscription_sform {
     }
     mvc {
         #callDefaultActionIfActionCantBeResolved = 1
+    }
+}
+
+nldmailsubscription_sform_AjaxResponse = PAGE
+nldmailsubscription_sform_AjaxResponse {
+    typeNum = {$plugin.tx_nldmailsubscription_sform.settings.ajaxTypeNum}
+
+    headerData >
+    config {
+        no_cache = 1
+        disableAllHeaderCode = 1
+        additionalHeaders.10.header = Content-Type: application/json
+        additionalHeaders.10.replace = 1
+        debug = 0
+        admPanel = 0
+    }
+
+    10 < styles.content.get
+    10 {
+        stdWrap.trim = 1
+        select {
+            where = list_type = "nldmailsubscription_sform"
+        }
+
+        renderObj < tt_content.list.20.nldmailsubscription_sform
     }
 }
 

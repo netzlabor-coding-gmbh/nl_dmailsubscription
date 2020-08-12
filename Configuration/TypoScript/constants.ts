@@ -13,6 +13,7 @@ plugin.tx_nldmailsubscription_sform {
         storagePid =
     }
     settings {
+        ajaxTypeNum = 1597222591
         mail {
             # cat=plugin.tx_nldmailsubscription_sform//a; type=string; label=Mail from Name
             fromName =
