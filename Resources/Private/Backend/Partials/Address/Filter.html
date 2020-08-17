@@ -13,6 +13,15 @@
         />
     </div>
     <div class="form-group">
+        <label for="demand-showHidden"><f:translate key="label.showHidden">Show hidden</f:translate></label>
+        <f:form.checkbox
+                id="demand-showHidden"
+                class=""
+                property="showHidden"
+                value="1"
+        />
+    </div>
+    <div class="form-group">
         <f:form.submit value="{f:translate(key: 'filter', default: 'Filter')}" class="btn btn-default btn-sm" />
     </div>
 </f:form>

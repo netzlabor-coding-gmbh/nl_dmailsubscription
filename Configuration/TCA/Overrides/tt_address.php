@@ -4,6 +4,28 @@ defined('TYPO3_MODE') || die();
 call_user_func(function()
 {
     $tmp_nl_dmailsubscription_columns = [
+        'crdate' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.crdate',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'datetime,int',
+                'default' => 0,
+                'readOnly' => true,
+            ]
+        ],
+        'tstamp' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.tstamp',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'datetime,int',
+                'default' => 0,
+                'readOnly' => true,
+            ]
+        ],
         'tx_nldmailsubscription_confirmed_at' => [
             'exclude' => true,
             'label' => 'LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tx_nldmailsubscription_domain_model_address.confirmed_at',

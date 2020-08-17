@@ -14,6 +14,11 @@ class AddressDemand extends AbstractEntity
     protected $raffle = 0;
 
     /**
+     * @var bool
+     */
+    protected $showHidden = false;
+
+    /**
      * @return int
      */
     public function getRaffle(): int
@@ -27,5 +32,21 @@ class AddressDemand extends AbstractEntity
     public function setRaffle($raffle): void
     {
         $this->raffle = (int) $raffle;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowHidden(): bool
+    {
+        return $this->showHidden;
+    }
+
+    /**
+     * @param bool $showHidden
+     */
+    public function setShowHidden($showHidden): void
+    {
+        $this->showHidden = (bool) $showHidden;
     }
 }

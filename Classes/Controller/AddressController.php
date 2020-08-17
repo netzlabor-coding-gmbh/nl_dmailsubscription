@@ -9,16 +9,21 @@ use NL\NlDmailsubscription\Domain\Model\Dto\ModuleData;
 use NL\NlDmailsubscription\Domain\Repository\AddressRepository;
 use NL\NlDmailsubscription\Domain\Repository\RaffleRepository;
 use NL\NlDmailsubscription\Service\ModuleDataStorageService;
+use NL\NlDmailsubscription\Utility\PageUtility;
+use NL\NlDmailsubscription\ViewTrait;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
-use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Utility\DebugUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class AddressController extends ActionController
 {
+    use ViewTrait;
+
     /**
      * Backend Template Container
      *
@@ -54,6 +59,11 @@ class AddressController extends ActionController
     protected $raffleRepository = null;
 
     /**
+     * @var array
+     */
+    protected $frameworkConfiguration = [];
+
+    /**
      * Page uid
      *
      * @var int
@@ -66,15 +76,15 @@ class AddressController extends ActionController
     protected $pageInformation = [];
 
     /**
-     * Function will be called before every other action
-     *
+     * @param ConfigurationManagerInterface $configurationManager
      */
-    public function initializeAction()
+    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
     {
-        $this->pageUid = (int)\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('id');
-        $this->pageInformation = BackendUtility::readPageAccess($this->pageUid, '');
+        $this->configurationManager = $configurationManager;
 
-        parent::initializeAction();
+        $this->frameworkConfiguration = $this
+            ->configurationManager
+            ->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
     }
 
     /**
@@ -99,6 +109,18 @@ class AddressController extends ActionController
     public function injectRaffleRepository(RaffleRepository $repository)
     {
         $this->raffleRepository = $repository;
+    }
+
+    /**
+     * Function will be called before every other action
+     *
+     */
+    public function initializeAction()
+    {
+        $this->pageUid = (int)GeneralUtility::_GET('id');
+        $this->pageInformation = BackendUtility::readPageAccess($this->pageUid, '');
+
+        parent::initializeAction();
     }
 
     /**
@@ -194,10 +216,13 @@ class AddressController extends ActionController
             $this->moduleData->setAddressDemand($demand);
         }
 
-        $addresses = $this->addressRepository->setStorage([$this->pageUid])->ignoreEnableFields(['hidden', 'starttime', 'endtime'])
-            ->findDemanded($demand);
+        $addresses = $this->addressRepository->setStorage([$this->pageUid])->findDemanded($demand);
 
-        $raffles = $this->raffleRepository->setStorage([$this->pageUid])->ignoreEnableFields(['hidden', 'starttime', 'endtime'])->findAll();
+        if ($storagePids = PageUtility::getPidListInTree($this->pageUid)) {
+            $this->raffleRepository->setStorage($storagePids);
+        }
+
+        $raffles = $this->raffleRepository->ignoreEnableFields(['hidden', 'starttime', 'endtime'])->findAll();
 
         $this->view->assignMultiple(compact('demand', 'addresses', 'raffles'));
     }
@@ -210,9 +235,23 @@ class AddressController extends ActionController
     {
         $demand = $this->moduleData->getAddressDemand();
 
-        $addresses = $this->addressRepository->setStorage([$this->pageUid])->ignoreEnableFields(['hidden', 'starttime', 'endtime'])
-            ->findDemanded($demand);
+        $addresses = $this->addressRepository->setStorage([$this->pageUid])->findDemanded($demand);
 
-        $this->redirect('list');
+        $csvView = $this->getView('Address/Export', 'csv');
+        $csvView->assignMultiple([
+            'addresses' => $addresses,
+            'dateFormat' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['ddmmyy'],
+            'timeFormat' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['hhmm'],
+        ]);
+
+        $csvContent = $csvView->render();
+
+        $fileName = "addresses.csv";
+
+        header('Content-Type: text/x-csv');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        header('Pragma: no-cache');
+
+        return $csvContent;
     }
 }

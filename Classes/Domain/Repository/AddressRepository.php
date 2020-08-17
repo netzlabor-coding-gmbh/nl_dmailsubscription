@@ -84,9 +84,10 @@ class AddressRepository extends Repository
 
     /**
      * @param AddressDemand $demand
+     * @param bool $raw
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findDemanded(AddressDemand $demand)
+    public function findDemanded(AddressDemand $demand, $raw = false)
     {
         $query = $this->createQuery();
 
@@ -96,10 +97,14 @@ class AddressRepository extends Repository
             $constraints[] = $query->equals('txNldmailsubscriptionRaffle', $raffle);
         }
 
+        if (false === $demand->isShowHidden()) {
+            $constraints[] = $query->equals('hidden', false);
+        }
+
         if ($constraints) {
             $query->matching($query->logicalAnd($constraints));
         }
 
-        return $query->execute();
+        return $query->execute($raw);
     }
 }

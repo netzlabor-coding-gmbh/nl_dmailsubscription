@@ -5,6 +5,7 @@ namespace NL\NlDmailsubscription\Service;
 
 use NL\NlDmailsubscription\Domain\Model\Dto\ModuleData;
 use NL\NlDmailsubscription\Domain\Model\Dto\AddressDemand;
+use NL\NlDmailsubscription\Utility\PageUtility;
 
 class ModuleDataStorageService implements \TYPO3\CMS\Core\SingletonInterface
 {
@@ -31,7 +32,7 @@ class ModuleDataStorageService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function loadModuleData()
     {
-        $moduleData = $GLOBALS['BE_USER']->getModuleData(self::KEY) ?? '';
+        $moduleData = $GLOBALS['BE_USER']->getModuleData($this->getKey()) ?? '';
         if ($moduleData !== '') {
             $moduleData = @unserialize($moduleData, ['allowed_classes' => [ModuleData::class, AddressDemand::class]]);
             if ($moduleData instanceof ModuleData) {
@@ -47,6 +48,11 @@ class ModuleDataStorageService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function persistModuleData(ModuleData $moduleData)
     {
-        $GLOBALS['BE_USER']->pushModuleData(self::KEY, serialize($moduleData));
+        $GLOBALS['BE_USER']->pushModuleData($this->getKey(), serialize($moduleData));
+    }
+
+    protected function getKey()
+    {
+        return self::KEY . '_' . PageUtility::getRootPageUid();
     }
 }

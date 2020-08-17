@@ -58,10 +58,10 @@
                 </a>
                 <f:if condition="{address.hidden} == 1">
                     <f:then>
-                        <a class="btn btn-default" href="{bu:issueCommand(parameters: 'data[tt_address][{address.uid}][hidden]=0', redirectUrl: returnUrl)}" title="{f:translate(key:'visibility.unhide', default: 'Un-hide record')}"><core:icon identifier="actions-edit-unhide" /></a>
+                        <a class="btn btn-default" href="{bu:issueCommand(parameters: 'data[tt_address][{address.uid}][hidden]=0', redirectUrl: redirectUrl)}" title="{f:translate(key:'visibility.unhide', default: 'Un-hide record')}"><core:icon identifier="actions-edit-unhide" /></a>
                     </f:then>
                     <f:else>
-                        <a class="btn btn-default" href="{bu:issueCommand(parameters: 'data[tt_address][{address.uid}][hidden]=1', redirectUrl: returnUrl)}" title="{f:translate(key:'visibility.hide', default: 'Hide record')}"><core:icon identifier="actions-edit-hide" /></a>
+                        <a class="btn btn-default" href="{bu:issueCommand(parameters: 'data[tt_address][{address.uid}][hidden]=1', redirectUrl: redirectUrl)}" title="{f:translate(key:'visibility.hide', default: 'Hide record')}"><core:icon identifier="actions-edit-hide" /></a>
                     </f:else>
                 </f:if>
             </div>

@@ -13,6 +13,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
 {
     /**
+     * @var \DateTime
+     */
+    protected $crdate;
+
+    /**
+     * @var \DateTime
+     */
+    protected $tstamp;
+
+    /**
      * @var string
      * @validate NotEmpty, EmailAddress, StringLength(minimum=3, maximum=255)
      */
@@ -382,5 +392,21 @@ class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
     public function isParticipationConfirmed()
     {
         return $this->isTxNldmailsubscriptionParticipationConfirmed();
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCrdate()
+    {
+        return $this->crdate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTstamp()
+    {
+        return $this->tstamp;
     }
 }
