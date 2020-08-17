@@ -300,5 +300,62 @@
                 </el>
             </ROOT>
         </sRedirects>
+        <sRaffle>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.sheet_raffles</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.raffles.uids>
+                        <TCEforms>
+                            <label>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.raffles.uids</label>
+                            <config>
+                                <type>group</type>
+                                <internal_type>db</internal_type>
+                                <allowed>tx_nldmailsubscription_domain_model_raffle</allowed>
+                                <size>3</size>
+                                <maxitems>99</maxitems>
+                                <minitems>0</minitems>
+                                <show_thumbs>1</show_thumbs>
+                                <wizards>
+                                    <suggest>
+                                        <type>suggest</type>
+                                    </suggest>
+                                </wizards>
+                                <fieldControl>
+                                    <editPopup>
+                                        <disabled>0</disabled>
+                                    </editPopup>
+                                    <addRecord>
+                                        <disabled>0</disabled>
+                                    </addRecord>
+                                    <listModule>
+                                        <disabled>0</disabled>
+                                    </listModule>
+                                </fieldControl>
+                            </config>
+                        </TCEforms>
+                    </settings.raffles.uids>
+                    <settings.raffles.conditionsOfParticipationLink>
+                        <TCEforms>
+                            <label>LLL:EXT:nl_dmailsubscription/Resources/Private/Language/locallang_db.xlf:tt_content.pi_flexform.conditionsOfParticipationLink</label>
+                            <exclude>0</exclude>
+                            <config>
+                                <type>input</type>
+                                <renderType>inputLink</renderType>
+                                <fieldControl>
+                                    <linkPopup>
+                                        <options>
+                                            <blindLinkOptions>file,folder,mail,url</blindLinkOptions>
+                                        </options>
+                                    </linkPopup>
+                                </fieldControl>
+                            </config>
+                        </TCEforms>
+                    </settings.raffles.conditionsOfParticipationLink>
+                </el>
+            </ROOT>
+        </sRaffle>
     </sheets>
 </T3DataStructure>

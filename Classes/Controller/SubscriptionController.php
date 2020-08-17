@@ -4,14 +4,19 @@ namespace NL\NlDmailsubscription\Controller;
 
 
 use NL\NlDmailsubscription\Domain\Model\Address;
+use NL\NlDmailsubscription\Domain\Model\Raffle;
 use NL\NlDmailsubscription\Domain\Repository\AddressRepository;
+use NL\NlDmailsubscription\Domain\Repository\RaffleRepository;
+use NL\NlDmailsubscription\Domain\Validator\AbstractEntityValidator;
 use NL\NlDmailsubscription\Domain\Validator\AddressTokenValidator;
 use NL\NlDmailsubscription\Domain\Validator\UniqueAddressValidator;
 use NL\NlDmailsubscription\Property\TypeConverter\AddressObjectConverter;
 use NL\NlDmailsubscription\Service\MailService;
 use NL\NlDmailsubscription\Type\SubscriptionSignalType;
+use NL\NlDmailsubscription\Utility\ArrayUtility;
 use NL\NlDmailsubscription\Utility\LinkUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
@@ -28,6 +33,11 @@ class SubscriptionController extends AbstractController
      * @var AddressRepository
      */
     protected $addressRepository = null;
+
+    /**
+     * @var RaffleRepository
+     */
+    protected $raffleRepository = null;
 
     /**
      * @var PersistenceManager
@@ -60,6 +70,14 @@ class SubscriptionController extends AbstractController
     public function injectAddressRepository(AddressRepository $repository)
     {
         $this->addressRepository = $repository;
+    }
+
+    /**
+     * @param RaffleRepository $repository
+     */
+    public function injectRaffleRepository(RaffleRepository $repository)
+    {
+        $this->raffleRepository = $repository;
     }
 
     /**
@@ -115,10 +133,14 @@ class SubscriptionController extends AbstractController
 
     /**
      * @param Address|null $address
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function showSubscriptionFormAction(Address $address = null)
     {
-        $this->view->assign('address', $address);
+        $this->view->assignMultiple([
+            'address' => $address,
+            'raffle' => $this->getRaffle(),
+        ]);
     }
 
     /**
@@ -167,6 +189,7 @@ class SubscriptionController extends AbstractController
     /**
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      * @throws \TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function initializeSubscribeAction()
     {
@@ -190,6 +213,23 @@ class SubscriptionController extends AbstractController
                 }
             }
         }
+
+        if ($this->request->hasArgument('address') && $this->getRaffle()) {
+            /* @var ConjunctionValidator $conjunctionValidator */
+            $conjunctionValidator = $this->arguments->getArgument('address')->getValidator();
+
+            /** @var AbstractEntityValidator $abstractEntityValidator */
+            $abstractEntityValidator = $this->objectManager->get(AbstractEntityValidator::class, ['settingsPath' => 'raffles.subscribe.validation']);
+
+            $conjunctionValidator->addValidator($abstractEntityValidator);
+
+            if ($this->request->getArgument('address')['txNldmailsubscriptionParticipationConfirmed']) {
+                /** @var AbstractEntityValidator $abstractEntityValidator */
+                $abstractEntityValidator = $this->objectManager->get(AbstractEntityValidator::class, ['settingsPath' => 'raffles.subscribe.participationValidation']);
+
+                $conjunctionValidator->addValidator($abstractEntityValidator);
+            }
+        }
     }
 
     /**
@@ -204,6 +244,10 @@ class SubscriptionController extends AbstractController
     {
         $key = 'success';
         $severity = FlashMessage::OK;
+
+        if ($address->isParticipationConfirmed() && ($raffle = $this->getRaffle())) {
+            $address->setRaffle($raffle);
+        }
 
         $address->setHidden($this->getSettingsValue('subscription.confirmation.enable'));
 
@@ -444,5 +488,25 @@ class SubscriptionController extends AbstractController
             ->setCreateAbsoluteUri(true)
             ->setNoCache(true)
             ->uriFor($actionName, $controllerArguments);
+    }
+
+    /**
+     * @return Raffle|null
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
+    protected function getRaffle()
+    {
+        $uids = GeneralUtility::trimExplode(',', $this->getSettingsValue('raffles.uids'), true);
+
+        if (!empty($uids) && ($raffles = $this->raffleRepository->disableStorage()->findByUids($uids))) {
+            $raffles = ArrayUtility::sortByPropertyValues($raffles->toArray(), 'uid', $uids);
+
+            /** @var Raffle $raffle */
+            $raffle = reset($raffles);
+
+            return $raffle;
+        }
+
+        return null;
     }
 }

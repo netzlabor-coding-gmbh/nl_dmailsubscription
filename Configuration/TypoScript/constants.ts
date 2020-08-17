@@ -54,3 +54,18 @@ plugin.tx_nldmailsubscription_sform {
         }
     }
 }
+
+module.tx_nldmailsubscription_raffleexport {
+    view {
+        # cat=module.tx_nldmailsubscription_raffleexport/file; type=string; label=Path to template root (BE)
+        templateRootPath = EXT:nl_dmailsubscription/Resources/Private/Backend/Templates/
+        # cat=module.tx_nldmailsubscription_raffleexport/file; type=string; label=Path to template partials (BE)
+        partialRootPath = EXT:nl_dmailsubscription/Resources/Private/Backend/Partials/
+        # cat=module.tx_nldmailsubscription_raffleexport/file; type=string; label=Path to template layouts (BE)
+        layoutRootPath = EXT:nl_dmailsubscription/Resources/Private/Backend/Layouts/
+    }
+    persistence {
+        # cat=module.tx_nldmailsubscription_raffleexport//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}

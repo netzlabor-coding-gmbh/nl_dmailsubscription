@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2018-05-31T16:25:46Z" product-name="nl_dmailsubscription">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-08-14T10:43:34Z" product-name="nl_dmailsubscription">
 		<header>
             <authorName>Maksym Chubin</authorName>
             <authorEmail>maksim.chubin@netzlabor-coding.de</authorEmail>
@@ -48,6 +48,12 @@
             <trans-unit id="tx_nldmailsubscription.mail.unsubscription_confirmation_subject">
                 <source>Confirm unsubscription on %s</source>
             </trans-unit>
+			<trans-unit id="tx_nldmailsubscription_domain_model_raffle">
+				<source>Raffle</source>
+			</trans-unit>
+			<trans-unit id="tx_nldmailsubscription_domain_model_raffle.title">
+				<source>Title</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

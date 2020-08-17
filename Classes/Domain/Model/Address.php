@@ -1,6 +1,7 @@
 <?php
 
 namespace NL\NlDmailsubscription\Domain\Model;
+
 use TYPO3\CMS\Core\Crypto\Random;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -41,6 +42,31 @@ class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
      * @var \DateTime
      */
     protected $txNldmailsubscriptionTokenExpires;
+
+    /**
+     * @var \NL\NlDmailsubscription\Domain\Model\Raffle
+     */
+    protected $txNldmailsubscriptionRaffle = null;
+
+    /**
+     * @var \DateTime
+     */
+    protected $txNldmailsubscriptionParticipationConfirmedAt;
+
+    /**
+     * @var bool
+     */
+    protected $txNldmailsubscriptionParticipationConfirmed = false;
+
+    /**
+     * @var \DateTime
+     */
+    protected $txNldmailsubscriptionDataprocessingConfirmedAt;
+
+    /**
+     * @var bool
+     */
+    protected $txNldmailsubscriptionDataprocessingConfirmed = false;
 
 
     /**
@@ -172,7 +198,8 @@ class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
      *
      * @return boolean $moduleSysDmailHtml
      */
-    public function getModuleSysDmailHtml() {
+    public function getModuleSysDmailHtml()
+    {
         return $this->moduleSysDmailHtml;
     }
 
@@ -182,7 +209,8 @@ class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
      * @param boolean $moduleSysDmailHtml
      * @return void
      */
-    public function setModuleSysDmailHtml($moduleSysDmailHtml) {
+    public function setModuleSysDmailHtml($moduleSysDmailHtml)
+    {
         $this->moduleSysDmailHtml = $moduleSysDmailHtml;
     }
 
@@ -248,5 +276,111 @@ class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
     public function setTxNldmailsubscriptionTokenExpires($txNldmailsubscriptionTokenExpires)
     {
         $this->txNldmailsubscriptionTokenExpires = $txNldmailsubscriptionTokenExpires;
+    }
+
+    /**
+     * @return Raffle
+     */
+    public function getTxNldmailsubscriptionRaffle()
+    {
+        return $this->txNldmailsubscriptionRaffle;
+    }
+
+    /**
+     * @param Raffle $txNldmailsubscriptionRaffle
+     */
+    public function setTxNldmailsubscriptionRaffle(Raffle $txNldmailsubscriptionRaffle)
+    {
+        $this->txNldmailsubscriptionRaffle = $txNldmailsubscriptionRaffle;
+    }
+
+    /**
+     * @param Raffle $raffle
+     */
+    public function setRaffle(Raffle $raffle)
+    {
+        return $this->setTxNldmailsubscriptionRaffle($raffle);
+    }
+
+    /**
+     * @return Raffle
+     */
+    public function getRaffle()
+    {
+        return $this->getTxNldmailsubscriptionRaffle();
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTxNldmailsubscriptionParticipationConfirmedAt()
+    {
+        return $this->txNldmailsubscriptionParticipationConfirmedAt;
+    }
+
+    /**
+     * @param \DateTime $txNldmailsubscriptionParticipationConfirmedAt
+     */
+    public function setTxNldmailsubscriptionParticipationConfirmedAt(?\DateTime $txNldmailsubscriptionParticipationConfirmedAt)
+    {
+        $this->txNldmailsubscriptionParticipationConfirmedAt = $txNldmailsubscriptionParticipationConfirmedAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTxNldmailsubscriptionParticipationConfirmed()
+    {
+        return $this->txNldmailsubscriptionParticipationConfirmed;
+    }
+
+    /**
+     * @param bool $txNldmailsubscriptionParticipationConfirmed
+     */
+    public function setTxNldmailsubscriptionParticipationConfirmed($txNldmailsubscriptionParticipationConfirmed)
+    {
+        $this->txNldmailsubscriptionParticipationConfirmed = $txNldmailsubscriptionParticipationConfirmed;
+        $this->setTxNldmailsubscriptionParticipationConfirmedAt($this->txNldmailsubscriptionParticipationConfirmed ? new \DateTime() : null);
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTxNldmailsubscriptionDataprocessingConfirmedAt()
+    {
+        return $this->txNldmailsubscriptionDataprocessingConfirmedAt;
+    }
+
+    /**
+     * @param \DateTime $txNldmailsubscriptionDataprocessingConfirmedAt
+     */
+    public function setTxNldmailsubscriptionDataprocessingConfirmedAt(?\DateTime $txNldmailsubscriptionDataprocessingConfirmedAt)
+    {
+        $this->txNldmailsubscriptionDataprocessingConfirmedAt = $txNldmailsubscriptionDataprocessingConfirmedAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTxNldmailsubscriptionDataprocessingConfirmed()
+    {
+        return $this->txNldmailsubscriptionDataprocessingConfirmed;
+    }
+
+    /**
+     * @param bool $txNldmailsubscriptionDataprocessingConfirmed
+     */
+    public function setTxNldmailsubscriptionDataprocessingConfirmed(bool $txNldmailsubscriptionDataprocessingConfirmed)
+    {
+        $this->txNldmailsubscriptionDataprocessingConfirmed = $txNldmailsubscriptionDataprocessingConfirmed;
+        $this->setTxNldmailsubscriptionDataprocessingConfirmedAt($this->txNldmailsubscriptionDataprocessingConfirmed ? new \DateTime() : null);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isParticipationConfirmed()
+    {
+        return $this->isTxNldmailsubscriptionParticipationConfirmed();
     }
 }

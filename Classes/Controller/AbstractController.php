@@ -6,8 +6,10 @@ use NL\NlDmailsubscription\SettingsTrait;
 use NL\NlDmailsubscription\Utility\ErrorUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\JsonView;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -64,6 +66,21 @@ abstract class AbstractController extends ActionController
 
         ArrayUtility::mergeRecursiveWithOverrule($settings, $this->settings, true, false);
         $this->settings = $settings;
+
+        $formData = GeneralUtility::_GET();
+        ArrayUtility::mergeRecursiveWithOverrule($formData, GeneralUtility::_POST());
+        $this->request->setArgument('getpost', $formData);
+    }
+
+    /**
+     * @inheritdoc
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     */
+    protected function initializeView(ViewInterface $view)
+    {
+        parent::initializeView($view);
+
+        $view->assign('getpost', $this->request->getArgument('getpost'));
     }
 
     /**

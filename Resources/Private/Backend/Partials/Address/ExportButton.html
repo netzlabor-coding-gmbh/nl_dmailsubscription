@@ -1,0 +1,12 @@
+<div class="pull-right">
+    <f:if condition="{addresses}">
+        <a class="btn btn-warning t3js-modal-trigger" href="{f:uri.action(controller: 'Address', action: 'export')}"
+           title="{f:translate(key: 'title.exportRecords', default: 'Export records')}"
+           data-severity="warning"
+           data-title="{f:translate(key:'title.modal.exportRecords', default: 'Export these records?')}"
+           data-content="{f:translate(key:'content.modal.exportRecords', default: 'Do you want to export the displayed records?')}"
+           data-button-close-text="{f:translate(key:'LLL:EXT:core/Resources/Private/Language/locallang_common.xlf:cancel')}">
+            <core:icon identifier="actions-document-export-csv" />
+        </a>
+    </f:if>
+</div>

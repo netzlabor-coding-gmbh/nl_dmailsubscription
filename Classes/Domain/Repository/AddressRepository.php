@@ -3,10 +3,13 @@
 namespace NL\NlDmailsubscription\Domain\Repository;
 
 
+use NL\NlDmailsubscription\Domain\Model\Dto\AddressDemand;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class AddressRepository extends Repository
 {
+    use QuerySettingsTrait;
+
     /**
      *
      */
@@ -77,5 +80,26 @@ class AddressRepository extends Repository
         $query = $this->createQuery();
 
         return $query->matching($query->equals($field, $value))->count();
+    }
+
+    /**
+     * @param AddressDemand $demand
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findDemanded(AddressDemand $demand)
+    {
+        $query = $this->createQuery();
+
+        $constraints = [];
+
+        if ($raffle = $demand->getRaffle()) {
+            $constraints[] = $query->equals('txNldmailsubscriptionRaffle', $raffle);
+        }
+
+        if ($constraints) {
+            $query->matching($query->logicalAnd($constraints));
+        }
+
+        return $query->execute();
     }
 }

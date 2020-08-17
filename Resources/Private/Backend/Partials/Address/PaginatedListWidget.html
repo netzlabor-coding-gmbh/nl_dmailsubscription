@@ -1,0 +1,74 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+      xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+      xmlns:bu="http://typo3.org/ns/TYPO3/CMS/Beuser/ViewHelpers">
+
+<f:be.widget.paginate objects="{addresses}" as="paginatedAddress"
+                      configuration="{itemsPerPage: 50, insertBelow: 1}">
+    <div class="table-fit">
+        <table id="typo3-address-list" class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th class="col-icon">
+                </th>
+                <th class="col-title"><f:translate key="tx_nldmailsubscription_domain_model_address.email">Email</f:translate></th>
+                <th><f:translate key="tx_nldmailsubscription_domain_model_address.raffle">Raffle</f:translate></th>
+                <th class="col-control"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <f:for each="{paginatedAddress}" as="address">
+                <f:render section="list_row" arguments="{_all}" />
+            </f:for>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="9">
+                    <f:count subject="{addresses}" /> <f:translate key="template.Addresses">Addresses</f:translate>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</f:be.widget.paginate>
+
+<f:section name="list_row">
+    <tr>
+        <td class="col-icon">
+            <a href="#" class="t3js-contextmenutrigger" data-table="tt_address" data-uid="{address.uid}" title="id={address.uid}">
+                <core:iconForRecord table="tt_address" row="{uid: address.uid, hidden: address.hidden, starttime: address.starttime.timestamp, endtime: address.endtime.timestamp}" />
+            </a>
+        </td>
+        <td class="col-title">
+            <a href="{bu:editRecord(parameters: 'edit[tt_address][{address.uid}]=edit&returnUrl={returnUrl}&noView=1')}" title="edit">
+                <span title="{address.email}">{address.email}</span>
+            </a>
+        </td>
+        <td>
+            <f:if condition="{address.raffle}">
+                <a href="{bu:editRecord(parameters: 'edit[tx_nldmailsubscription_domain_model_raffle][{address.raffle.uid}]=edit&returnUrl={returnUrl}&noView=1')}" title="edit">
+                    <span title="{address.raffle.title}">{address.raffle.title}</span>
+                </a>
+            </f:if>
+        </td>
+        <td class="col-control">
+            <div class="btn-group" role="group">
+                <a href="{bu:editRecord(parameters: 'edit[tt_address][{address.uid}]=edit&returnUrl={returnUrl}&noView=1')}" class="btn btn-default" title="edit">
+                    <core:icon identifier="actions-open" />
+                </a>
+                <f:if condition="{address.hidden} == 1">
+                    <f:then>
+                        <a class="btn btn-default" href="{bu:issueCommand(parameters: 'data[tt_address][{address.uid}][hidden]=0', redirectUrl: returnUrl)}" title="{f:translate(key:'visibility.unhide', default: 'Un-hide record')}"><core:icon identifier="actions-edit-unhide" /></a>
+                    </f:then>
+                    <f:else>
+                        <a class="btn btn-default" href="{bu:issueCommand(parameters: 'data[tt_address][{address.uid}][hidden]=1', redirectUrl: returnUrl)}" title="{f:translate(key:'visibility.hide', default: 'Hide record')}"><core:icon identifier="actions-edit-hide" /></a>
+                    </f:else>
+                </f:if>
+            </div>
+            <div class="btn-group" role="group">
+                <a class="btn btn-default" href="#" onclick="top.launchView('tt_address', '{address.uid}'); return false;"><core:icon identifier="actions-document-info" /></a>
+            </div>
+        </td>
+    </tr>
+</f:section>
+</html>

@@ -1,7 +1,69 @@
 {
-    "modules": [],
+    "modules": [
+        {
+            "config": {
+                "position": [
+                    206,
+                    222
+                ]
+            },
+            "name": "New Model Object",
+            "value": {
+                "actionGroup": {
+                    "_default0_list": false,
+                    "_default1_show": false,
+                    "_default2_new_create": false,
+                    "_default3_edit_update": false,
+                    "_default4_delete": false,
+                    "customActions": []
+                },
+                "name": "Raffle",
+                "objectsettings": {
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": true,
+                    "aggregateRoot": true,
+                    "categorizable": false,
+                    "description": "",
+                    "mapToTable": "",
+                    "parentClass": "",
+                    "sorting": true,
+                    "type": "Entity",
+                    "uid": "1179043872712"
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": true,
+                            "propertyName": "title",
+                            "propertyType": "String",
+                            "uid": "1236692567925"
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": []
+                }
+            }
+        }
+    ],
     "properties": {
-        "backendModules": [],
+        "backendModules": [
+            {
+                "actions": {
+                    "controllerActionCombinations": "Raffle => export"
+                },
+                "description": "Exports tt_address table values to csv by selected Raffle",
+                "key": "raffleexport",
+                "mainModule": "web",
+                "name": "Raffle Export",
+                "tabLabel": "Raffle Export"
+            }
+        ],
         "description": "Direct Mail subscription by netzlabor coding GmbH",
         "emConf": {
             "category": "plugin",
@@ -42,7 +104,7 @@
     },
     "wires": [],
     "log": {
-        "last_modified": "2018-05-22 04:52",
+        "last_modified": "2020-08-14 10:43",
         "extension_builder_version": "8.7.0",
         "be_user": "Maksym (3)"
     }

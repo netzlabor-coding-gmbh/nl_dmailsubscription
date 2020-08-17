@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2018-03-23UTC15:10:580">
+    <file source-language="en" datatype="plaintext" original="messages" date="2020-08-14T10:43:34Z">
         <header>
             <authorName>Maksym Chubin</authorName>
             <authorEmail>maksim.chubin@netzlabor-coding.de</authorEmail>
@@ -23,6 +23,18 @@
             </trans-unit>
             <trans-unit id="tx_nldmailsubscription_domain_model_address.token_expires">
                 <source>Token Expires</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_domain_model_address.raffle">
+                <source>Raffle</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_domain_model_address.participation_confirmed_at">
+                <source>Participation Confirmed At</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_domain_model_address.dataprocessing_confirmed_at">
+                <source>Data-processing Confirmed At</source>
+            </trans-unit>
+            <trans-unit id="tx_nldmailsubscription_domain_model_address.palette">
+                <source>Raffle</source>
             </trans-unit>
             <trans-unit id="tt_content.pi_flexform.choose_action">
                 <source>Choose Action</source>
@@ -80,6 +92,21 @@
 			</trans-unit>
 			<trans-unit id="tt_content.pi_flexform.redirects.disable">
 				<source>Disable</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.sheet_raffles">
+				<source>Raffles</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.raffles.uids">
+				<source>Raffles</source>
+			</trans-unit>
+			<trans-unit id="tt_content.pi_flexform.conditionsOfParticipationLink">
+				<source>Conditions Of Participation Link</source>
+			</trans-unit>
+			<trans-unit id="tx_nldmailsubscription_domain_model_raffle">
+				<source>Raffle</source>
+			</trans-unit>
+			<trans-unit id="tx_nldmailsubscription_domain_model_raffle.title">
+				<source>Title</source>
 			</trans-unit>
         </body>
     </file>

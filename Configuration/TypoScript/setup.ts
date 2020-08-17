@@ -38,6 +38,43 @@ plugin.tx_nldmailsubscription_sform {
                 tokenLifetime = {$plugin.tx_nldmailsubscription_sform.settings.unsubscription.confirmation.tokenLifetime}
             }
         }
+        raffles {
+            subscribe {
+                validation {
+                    txNldmailsubscriptionDataprocessingConfirmed {
+                        1 = NotEmpty
+                        2 = Boolean(is=true)
+                    }
+                }
+                participationValidation {
+                    firstName {
+                        1 = NotEmpty
+                        2 = String
+                        3 = StringLength(minimum=2, maximum=50)
+                    }
+                    lastName {
+                        1 = NotEmpty
+                        2 = String
+                        3 = StringLength(minimum=2, maximum=50)
+                    }
+                    address {
+                        1 = NotEmpty
+                        2 = String
+                        3 = StringLength(minimum=2, maximum=255)
+                    }
+                    city {
+                        1 = NotEmpty
+                        2 = String
+                        3 = StringLength(minimum=2, maximum=255)
+                    }
+                    zip {
+                        1 = NotEmpty
+                        2 = String
+                        3 = StringLength(minimum=2, maximum=255)
+                    }
+                }
+            }
+        }
     }
     features {
         #skipDefaultArguments = 1
@@ -109,3 +146,18 @@ plugin.tx_nldmailsubscription._CSS_DEFAULT_STYLE (
         color:green;
     }
 )
+
+# Module configuration
+module.tx_nldmailsubscription_web_nldmailsubscriptionraffleexport {
+    persistence {
+        storagePid = {$module.tx_nldmailsubscription_raffleexport.persistence.storagePid}
+    }
+    view {
+        templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Backend/Templates/
+        templateRootPaths.1 = {$module.tx_nldmailsubscription_raffleexport.view.templateRootPath}
+        partialRootPaths.0 = EXT:nl_dmailsubscription/Resources/Private/Backend/Partials/
+        partialRootPaths.1 = {$module.tx_nldmailsubscription_raffleexport.view.partialRootPath}
+        layoutRootPaths.0 = EXT:nl_dmailsubscription/Resources/Private/Backend/Layouts/
+        layoutRootPaths.1 = {$module.tx_nldmailsubscription_raffleexport.view.layoutRootPath}
+    }
+}

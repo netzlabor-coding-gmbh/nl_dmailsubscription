@@ -1,0 +1,18 @@
+<f:form action="list" objectName="demand" object="{demand}" class="form-inline form-inline-spaced">
+    <div class="form-group">
+        <label for="demand-raffle"><f:translate key="label.raffle">Raffle</f:translate></label>
+        <f:form.select
+                id="demand-raffle"
+                class="form-control input-sm"
+                property="raffle"
+                options="{raffles}"
+                optionLabelField="title"
+                optionValueField="uid"
+                prependOptionLabel=""
+                prependOptionValue=""
+        />
+    </div>
+    <div class="form-group">
+        <f:form.submit value="{f:translate(key: 'filter', default: 'Filter')}" class="btn btn-default btn-sm" />
+    </div>
+</f:form>

@@ -8,7 +8,7 @@
 
 ---
 conf.py:
-  copyright: 2018
+  copyright: 2020
   project: Direct Mail Subscription
   version: 1.0.0
   release: 1.0.0
