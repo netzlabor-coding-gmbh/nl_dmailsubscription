@@ -50,14 +50,26 @@ class MailService implements SingletonInterface
 
         $this->frameworkConfiguration = $this
             ->configurationManager
-            ->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            ->getConfiguration(
+                ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
+                'NlDmailsubscription',
+                'Sform'
+            );
+
+        if (!isset($this->frameworkConfiguration['extensionName'])) {
+            $this->frameworkConfiguration['extensionName'] = 'NlDmailsubscription';
+        }
+
+        if (!isset($this->frameworkConfiguration['pluginName'])) {
+            $this->frameworkConfiguration['pluginName'] = 'Sform';
+        }
 
         $this->settings = $this
             ->configurationManager
             ->getConfiguration(
                 ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-                $this->frameworkConfiguration['extensionName'],
-                $this->frameworkConfiguration['pluginName']
+                'NlDmailsubscription',
+                'Sform'
             );
     }
 
@@ -77,7 +89,7 @@ class MailService implements SingletonInterface
                 'mail.subscriptionConfirmationSubject',
                 LocalizationUtility::translate(
                     'tx_nldmailsubscription.mail.subscription_confirmation_subject',
-                    $this->frameworkConfiguration['extensionName'],
+                    'nl_dmailsubscription',
                     [$this->getSettingsValue('mail.sitename', $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'])]
                 )
             ),
@@ -107,7 +119,7 @@ class MailService implements SingletonInterface
                 'mail.unsubscriptionConfirmationSubject',
                 LocalizationUtility::translate(
                     'tx_nldmailsubscription.mail.unsubscription_confirmation_subject',
-                    $this->frameworkConfiguration['extensionName'],
+                    'nl_dmailsubscription',
                     [$this->getSettingsValue('mail.sitename', $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'])]
                 )
             ),
