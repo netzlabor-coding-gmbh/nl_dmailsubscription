@@ -299,7 +299,7 @@ class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
     /**
      * @param Raffle $txNldmailsubscriptionRaffle
      */
-    public function setTxNldmailsubscriptionRaffle(Raffle $txNldmailsubscriptionRaffle)
+    public function setTxNldmailsubscriptionRaffle(Raffle $txNldmailsubscriptionRaffle = null)
     {
         $this->txNldmailsubscriptionRaffle = $txNldmailsubscriptionRaffle;
     }
@@ -307,7 +307,7 @@ class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
     /**
      * @param Raffle $raffle
      */
-    public function setRaffle(Raffle $raffle)
+    public function setRaffle(Raffle $raffle = null)
     {
         return $this->setTxNldmailsubscriptionRaffle($raffle);
     }

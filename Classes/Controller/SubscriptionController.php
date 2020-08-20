@@ -226,7 +226,8 @@ class SubscriptionController extends AbstractController
             }
         }
 
-        if ($this->request->hasArgument('address') && $this->getRaffle()) {
+        if ($this->request->hasArgument('address')
+            && isset($this->request->getArgument('address')['txNldmailsubscriptionRaffle']) && $this->getRaffle()) {
             /* @var ConjunctionValidator $conjunctionValidator */
             $conjunctionValidator = $this->arguments->getArgument('address')->getValidator();
 
@@ -257,9 +258,7 @@ class SubscriptionController extends AbstractController
         $key = 'success';
         $severity = FlashMessage::OK;
 
-        if ($address->isParticipationConfirmed() && ($raffle = $this->getRaffle())) {
-            $address->setRaffle($raffle);
-        }
+        $address->setRaffle($address->isParticipationConfirmed() ? $this->getRaffle() : null);
 
         $address->setHidden($this->getSettingsValue('subscription.confirmation.enable'));
 
