@@ -60,11 +60,9 @@ class AddressRepository extends Repository
     {
         $query = $this->createQuery();
 
-        return $query
-            ->matching($query->equals('uid', $identifier))
-            ->setLimit(1)
-            ->execute()
-            ->getFirst();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+
+        return $query->matching($query->equals('uid', $identifier))->execute()->getFirst();
     }
 
     /**
