@@ -258,7 +258,9 @@ class SubscriptionController extends AbstractController
         $key = 'success';
         $severity = FlashMessage::OK;
 
-        $address->setRaffle($address->isParticipationConfirmed() ? $this->getRaffle() : null);
+        if ($raffle = $this->getRaffle()) {
+            $address->setRaffle($raffle);
+        }
 
         $address->setHidden($this->getSettingsValue('subscription.confirmation.enable'));
 
