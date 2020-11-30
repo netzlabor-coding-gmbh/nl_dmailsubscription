@@ -89,7 +89,7 @@ class MailService implements SingletonInterface
                 'mail.subscriptionConfirmationSubject',
                 LocalizationUtility::translate(
                     'tx_nldmailsubscription.mail.subscription_confirmation_subject',
-                    'nl_dmailsubscription',
+                    'NlDmailsubscription',
                     [$this->getSettingsValue('mail.sitename', $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'])]
                 )
             ),
@@ -119,7 +119,7 @@ class MailService implements SingletonInterface
                 'mail.unsubscriptionConfirmationSubject',
                 LocalizationUtility::translate(
                     'tx_nldmailsubscription.mail.unsubscription_confirmation_subject',
-                    'nl_dmailsubscription',
+                    'NlDmailsubscription',
                     [$this->getSettingsValue('mail.sitename', $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'])]
                 )
             ),

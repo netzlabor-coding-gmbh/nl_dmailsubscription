@@ -89,7 +89,7 @@ class ValidAddressValidator extends AbstractValidator
                 Error::class,
                 $this->translateErrorMessage(
                     'validator.validAddress.invalid',
-                    'nl_dmailsubscription',
+                    'NlDmailsubscription',
                     [$propertyValue]
                 ),
                 1514633458

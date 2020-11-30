@@ -147,7 +147,7 @@ class AbstractEntityValidator extends GenericObjectValidator implements Validato
                 \TYPO3\CMS\Extbase\Error\Error::class,
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     'validator.abstractEntity.notValidatable',
-                    'nl_dmailsubscription'
+                    'NlDmailsubscription'
                 ),
                 1530096635
             );
@@ -174,7 +174,7 @@ class AbstractEntityValidator extends GenericObjectValidator implements Validato
                     \TYPO3\CMS\Extbase\Error\Error::class,
                     \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                         'validator.abstractEntity.propertyDoesNotExist',
-                        'nl_dmailsubscription'
+                        'NlDmailsubscription'
                     ),
                     1530108947
                 );

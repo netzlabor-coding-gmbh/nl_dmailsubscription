@@ -62,7 +62,7 @@ class UniqueAddressValidator extends AbstractValidator
                 Error::class,
                 $this->translateErrorMessage(
                     'validator.uniqueAddress.invalid',
-                    'nl_dmailsubscription',
+                    'NlDmailsubscription',
                     [$value]
                 ),
                 1516001603

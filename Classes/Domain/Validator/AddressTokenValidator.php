@@ -42,7 +42,7 @@ class AddressTokenValidator extends AbstractValidator
                 Error::class,
                 $this->translateErrorMessage(
                     'validator.addressToken.invalid',
-                    'nl_dmailsubscription'
+                    'NlDmailsubscription'
                 ),
                 1515975644
             );
@@ -59,7 +59,7 @@ class AddressTokenValidator extends AbstractValidator
                 Error::class,
                 $this->translateErrorMessage(
                     'validator.addressToken.expired',
-                    'nl_dmailsubscription'
+                    'NlDmailsubscription'
                 ),
                 1515975493
             );
