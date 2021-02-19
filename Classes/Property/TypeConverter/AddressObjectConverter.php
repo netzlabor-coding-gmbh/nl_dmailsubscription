@@ -6,6 +6,7 @@ namespace NL\NlDmailsubscription\Property\TypeConverter;
 use NL\NlDmailsubscription\Domain\Repository\AddressRepository;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 
 /**
  * Class AddressObjectConverter
@@ -39,7 +40,7 @@ class AddressObjectConverter extends PersistentObjectConverter
      * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidTargetException
      * @throws \TYPO3\CMS\Extbase\Property\Exception\TargetNotFoundException
      */
-    protected function handleArrayData(array $source, $targetType, array &$convertedChildProperties, \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration = null)
+    protected function handleArrayData(array $source, string $targetType, array &$convertedChildProperties, PropertyMappingConfigurationInterface $configuration = null): object
     {
         if (isset($source['__identity'])) {
             $object = $this->fetchObjectFromPersistence($source['__identity'], $targetType);
@@ -92,7 +93,7 @@ class AddressObjectConverter extends PersistentObjectConverter
      * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidSourceException
      * @return object
      */
-    protected function fetchObjectFromPersistence($identity, $targetType)
+    protected function fetchObjectFromPersistence($identity, string $targetType): object
     {
         if (ctype_digit((string)$identity)) {
             $object = $this->addressRepository->findByIdentifier($identity);

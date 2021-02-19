@@ -13,7 +13,9 @@ class Address extends \FriendsOfTYPO3\TtAddress\Domain\Model\Address
 {
     /**
      * @var string
-     * @validate NotEmpty, EmailAddress, StringLength(minimum=3, maximum=255)
+     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("StringLength", options={"minimum": 3, "maximum": 255})
      */
     protected $email;
 

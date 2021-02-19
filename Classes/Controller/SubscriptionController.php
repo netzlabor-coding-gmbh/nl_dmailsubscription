@@ -194,7 +194,7 @@ class SubscriptionController extends AbstractController
 
     /**
      * @param Address $address
-     * @validate $address \NL\NlDmailsubscription\Domain\Validator\UniqueAddressValidator(property='email')
+     * @TYPO3\CMS\Extbase\Annotation\Validate(param="address", validator="NL\NlDmailsubscription\Domain\Validator\UniqueAddressValidator")
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException

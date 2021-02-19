@@ -30,7 +30,7 @@ class UniqueAddressValidator extends AbstractValidator
      */
 
     protected $supportedOptions = array(
-        'property' => array('', 'The property to use for address lookup', 'string', true),
+        'property' => array('email', 'The property to use for address lookup', 'string'),
         'global' => array(false, 'Check unique globally'),
         'dirty' => array(false, 'Validate only if property is dirty'),
     );
