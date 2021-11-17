@@ -128,7 +128,7 @@ abstract class AbstractController extends ActionController
         } else {
             $result = parent::errorAction();
 
-            if ($this->request->getReferringRequest() === null) {
+            if ($this->request->getOriginalRequest() === null) {
                 call_user_func_array(
                     [$this, $this->getSettingsValue('defaultReferrer.method', 'forward')],
                     $this->getSettingsValue('defaultReferrer.arguments', [

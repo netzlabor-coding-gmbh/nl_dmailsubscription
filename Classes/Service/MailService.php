@@ -146,13 +146,13 @@ class MailService implements SingletonInterface
         $htmlView->assignMultiple($mergedValues);
         $htmlBody = $htmlView->render();
 
-        $mail->setBody($htmlBody, 'text/html');
+        $mail->html($htmlBody);
 
         $plainView = $this->getView('Mail/' . $view, 'txt');
         $plainView->assignMultiple($mergedValues);
         $plainBody = $plainView->render();
 
-        $mail->addPart($plainBody, 'text/plain');
+        $mail->text($plainBody);
 
         $mail->send();
 
