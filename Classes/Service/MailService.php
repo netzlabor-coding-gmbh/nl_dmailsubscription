@@ -6,14 +6,18 @@ namespace NL\NlDmailsubscription\Service;
 use NL\NlDmailsubscription\Domain\Model\Address;
 use NL\NlDmailsubscription\SettingsTrait;
 use NL\NlDmailsubscription\ViewTrait;
-use TYPO3\CMS\Core\Mail\MailMessage;
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Mail\FluidEmail;
+use TYPO3\CMS\Core\Mail\Mailer;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MailUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Fluid\View\TemplatePaths;
 
 class MailService implements SingletonInterface
 {
@@ -127,48 +131,76 @@ class MailService implements SingletonInterface
      * @param $view
      * @param array $values
      * @return boolean
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidExtensionNameException
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     protected function sendMessage($to, $subject, $view, $values = [])
     {
-        $mergedValues = ['settings' => $this->settings];
+        $mergedValues = ['settings' => $this->settings, 'title' => $subject];
 
         ArrayUtility::mergeRecursiveWithOverrule($mergedValues, $values);
 
-        /* @var MailMessage */
-        $mail = $this->objectManager->get(MailMessage::class);
-        $mail
-            ->setTo($to)
-            ->setFrom($this->getFrom())
-            ->setSubject($subject);
+        $fluidEmail = GeneralUtility::makeInstance(
+            FluidEmail::class,
+            GeneralUtility::makeInstance(TemplatePaths::class, $this->getTemplateConfiguration())
+        );
 
-        $htmlView = $this->getView('Mail/' . $view, 'html');
-        $htmlView->assignMultiple($mergedValues);
-        $htmlBody = $htmlView->render();
+        if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface) {
+            $fluidEmail->setRequest($GLOBALS['TYPO3_REQUEST']);
+        }
 
-        $mail->html($htmlBody);
+        $fluidEmail
+            ->to(new \Symfony\Component\Mime\Address($to))
+            ->from(new \Symfony\Component\Mime\Address(
+                $this->getSettingsValue('mail.fromEmail', MailUtility::getSystemFromAddress()),
+                $this->getSettingsValue('mail.fromName', MailUtility::getSystemFromName()) ?? ''
+            ))
+            ->subject($subject)
+            ->format('both')
+            ->setTemplate($view)
+            ->assignMultiple($mergedValues);
 
-        $plainView = $this->getView('Mail/' . $view, 'txt');
-        $plainView->assignMultiple($mergedValues);
-        $plainBody = $plainView->render();
+        GeneralUtility::makeInstance(Mailer::class)->send($fluidEmail);
 
-        $mail->text($plainBody);
-
-        $mail->send();
-
-        return $mail->isSent();
+        return true;
     }
 
     /**
-     * @return array|mixed
+     * @return array
      */
-    protected function getFrom()
+    protected function getTemplateConfiguration(): array
     {
-        return $this->getSettingsValue('mail.fromName', MailUtility::getSystemFromName()) ?
-            [
-                $this->getSettingsValue('mail.fromEmail', MailUtility::getSystemFromAddress()) =>
-                $this->getSettingsValue('mail.fromName', MailUtility::getSystemFromName())
-            ] :
-            $this->getSettingsValue('mail.fromEmail', MailUtility::getSystemFromAddress());
+        $templateConfiguration = $GLOBALS['TYPO3_CONF_VARS']['MAIL'];
+
+        if (is_array($this->getAbsoluteTemplateRootPaths() ?? null)) {
+            $templateRootPaths = $this->getAbsoluteTemplateRootPaths();
+
+            foreach ($templateRootPaths as $key => $path) {
+                $templateRootPaths[$key] = rtrim($path, '/') . '/Mail/';
+            }
+
+            $templateConfiguration['templateRootPaths'] = array_replace_recursive(
+                $templateConfiguration['templateRootPaths'],
+                $templateRootPaths
+            );
+            ksort($templateConfiguration['templateRootPaths']);
+        }
+
+        if (is_array($this->getAbsolutePartialRootPaths() ?? null)) {
+            $templateConfiguration['partialRootPaths'] = array_replace_recursive(
+                $templateConfiguration['partialRootPaths'],
+                $this->getAbsolutePartialRootPaths()
+            );
+            ksort($templateConfiguration['partialRootPaths']);
+        }
+
+        if (is_array($this->getAbsoluteLayoutRootPath() ?? null)) {
+            $templateConfiguration['layoutRootPaths'] = array_replace_recursive(
+                $templateConfiguration['layoutRootPaths'],
+                $this->getAbsoluteLayoutRootPath()
+            );
+            ksort($templateConfiguration['layoutRootPaths']);
+        }
+
+        return $templateConfiguration;
     }
 }
